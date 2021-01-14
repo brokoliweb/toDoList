@@ -13,7 +13,7 @@ const addProjectButton = document.querySelector('.add-new-task');
 addProjectButton.addEventListener('click', openProjectForm);
 
 function renderTaskList() {
-  const listElements = document.querySelectorAll('li');
+  const listElements = document.querySelectorAll('tr');
   for( let i = 0; i < listElements.length; i ++) {
     listElements[i].addEventListener("click", changeStatus);
   }

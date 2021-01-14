@@ -20,14 +20,20 @@ function openProjectForm() {
 }
 
 function addProject() {
-  let newListElement = document.createElement("li");
-  newListElement.textContent = `${taskTitle.value} || ${taskDescription.value} || ${dueDate.value}`;
-  taskList.appendChild(newListElement);
+  let tableRow = document.createElement("tr");
+  taskList.appendChild(tableRow);
+  let tableColumn1 = document.createElement("td");
+  let tableColumn2 = document.createElement("td");
+  tableColumn1.textContent = `${taskTitle.value} || ${taskDescription.value = "no description"}`;
+  tableColumn2.textContent = dueDate.value = "no due date";
+  tableRow.appendChild(tableColumn1);
+  tableRow.appendChild(tableColumn2);
   taskForm.style.display = "none";
   taskArray.push({
     title: taskTitle.value,
     description: taskDescription.value,
-    date: dueDate.value
+    date: dueDate.value,
+    striked: false
   });
   console.log(taskArray);
   renderTaskList();
@@ -42,4 +48,4 @@ function cancelForm() {
 
 
 
-export { openProjectForm };
+export { taskArray, openProjectForm };

@@ -29,7 +29,7 @@ const addProjectButton = document.querySelector('.add-new-task');
 addProjectButton.addEventListener('click', _modules_addTasks__WEBPACK_IMPORTED_MODULE_0__.openProjectForm);
 
 function renderTaskList() {
-  const listElements = document.querySelectorAll('li');
+  const listElements = document.querySelectorAll('tr');
   for( let i = 0; i < listElements.length; i ++) {
     listElements[i].addEventListener("click", _modules_modifyTasks__WEBPACK_IMPORTED_MODULE_1__.changeStatus);
   }
@@ -47,6 +47,7 @@ function renderTaskList() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "taskArray": () => /* binding */ taskArray,
 /* harmony export */   "openProjectForm": () => /* binding */ openProjectForm
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
@@ -72,14 +73,20 @@ function openProjectForm() {
 }
 
 function addProject() {
-  let newListElement = document.createElement("li");
-  newListElement.textContent = `${taskTitle.value} || ${taskDescription.value} || ${dueDate.value}`;
-  taskList.appendChild(newListElement);
+  let tableRow = document.createElement("tr");
+  taskList.appendChild(tableRow);
+  let tableColumn1 = document.createElement("td");
+  let tableColumn2 = document.createElement("td");
+  tableColumn1.textContent = `${taskTitle.value} || ${taskDescription.value = "no description"}`;
+  tableColumn2.textContent = dueDate.value = "no due date";
+  tableRow.appendChild(tableColumn1);
+  tableRow.appendChild(tableColumn2);
   taskForm.style.display = "none";
   taskArray.push({
     title: taskTitle.value,
     description: taskDescription.value,
-    date: dueDate.value
+    date: dueDate.value,
+    striked: false
   });
   console.log(taskArray);
   (0,_index__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)();
@@ -109,13 +116,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "changeStatus": () => /* binding */ changeStatus
 /* harmony export */ });
+/* harmony import */ var _addTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addTasks */ "./src/modules/addTasks.js");
+
 
 
 function changeStatus(e) {
-  if (e.target.classList.value !== "striked") {
-    e.target.classList.add("striked");
+  
+  if (e.target.parentNode.classList.value !== "striked") {
+    e.target.parentNode.classList.add("striked");
+    _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[0].striked = true;
+    console.log(_addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray)
   } else {
-    e.target.classList.remove("striked");
+    e.target.parentNode.classList.remove("striked");
+    _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[0].striked = false;
+    console.log(_addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray)
   }
   
 }

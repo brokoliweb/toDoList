@@ -1,10 +1,16 @@
+import { taskArray } from "./addTasks";
 
 
 function changeStatus(e) {
-  if (e.target.classList.value !== "striked") {
-    e.target.classList.add("striked");
+  
+  if (e.target.parentNode.classList.value !== "striked") {
+    e.target.parentNode.classList.add("striked");
+    taskArray[0].striked = true;
+    console.log(taskArray)
   } else {
-    e.target.classList.remove("striked");
+    e.target.parentNode.classList.remove("striked");
+    taskArray[0].striked = false;
+    console.log(taskArray)
   }
   
 }
