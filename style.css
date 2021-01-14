@@ -1,0 +1,62 @@
+body {
+    
+    font-family: monospace;
+    font-size: 16px;
+}
+
+div.task-list, .todolist {
+    height: 96vh;
+    padding: 2vh;
+}
+
+h2 {
+  font-size: 1em;
+  font-weight: bold;
+  padding: 1em;
+}
+
+h2:hover {
+  cursor: pointer;
+}
+
+.task-list {
+    background: rgb(155, 128, 128);
+    
+}
+
+button {
+    margin: 1em;
+}
+
+
+#grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+form {
+ display: none;
+ padding-left: 1em;
+}
+
+input, label {
+  display: block;
+}
+
+span:hover {
+  cursor: pointer;
+  
+}
+
+
+
+ul {
+  margin: 1em;
+  line-height: 2em;
+  cursor: pointer;
+}
+
+.striked {
+  text-decoration: line-through;
+}
