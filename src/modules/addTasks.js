@@ -87,12 +87,6 @@ function addProject() {
       striked: false,
     });
   }
-
-  console.log(taskArray);
-  console.log(weekTaskArray);
-  console.log(todayTaskArray);
-
-
   renderTaskList();
 }
 
@@ -101,4 +95,6 @@ function cancelForm() {
   renderTaskList();
 }
 
-export { taskList, taskArray, openProjectForm };
+
+
+export { taskList, taskArray, todayTaskArray, weekTaskArray, openProjectForm };
