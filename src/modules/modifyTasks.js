@@ -1,18 +1,19 @@
 import { taskArray } from "./addTasks";
 
-
 function changeStatus(e) {
-  console.log(e.target)
+  
+    let indexNum = Number(e.target.parentNode.id);
+  
+
   if (e.target.parentNode.classList.value !== "striked") {
     e.target.parentNode.classList.add("striked");
-    taskArray[0].striked = true;
-    console.log(taskArray)
+    taskArray[indexNum].striked = true;
+    console.log(taskArray);
   } else {
     e.target.parentNode.classList.remove("striked");
-    taskArray[0].striked = false;
-    console.log(taskArray)
+    taskArray[indexNum].striked = false;
+    console.log(taskArray);
   }
-  
 }
 
 export { changeStatus };

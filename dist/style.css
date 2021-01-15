@@ -38,6 +38,8 @@ button {
 form {
  display: none;
  padding-left: 1em;
+ padding-bottom: 2em;
+
 }
 
 input, label {

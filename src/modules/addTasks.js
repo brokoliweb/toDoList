@@ -25,6 +25,7 @@ function addProject() {
     return;
   }
   let tableRow = document.createElement("tr");
+  tableRow.id = (`${taskArray.length}`);
   taskList.appendChild(tableRow);
   let tableColumn1 = document.createElement("td");
   let tableColumn2 = document.createElement("td");
