@@ -73,12 +73,18 @@ function openProjectForm() {
 }
 
 function addProject() {
+  if (taskTitle.value === "") {
+    alert("Title can not be empty");
+    return;
+  }
   let tableRow = document.createElement("tr");
   taskList.appendChild(tableRow);
   let tableColumn1 = document.createElement("td");
   let tableColumn2 = document.createElement("td");
-  tableColumn1.textContent = `${taskTitle.value} || ${taskDescription.value || "no description"}`;
-  tableColumn2.textContent = (dueDate.value || "no due date");
+  tableColumn1.textContent = `${taskTitle.value} || ${
+    taskDescription.value || "no description"
+  }`;
+  tableColumn2.textContent = dueDate.value || "no due date";
   tableRow.appendChild(tableColumn1);
   tableRow.appendChild(tableColumn2);
   taskForm.style.display = "none";
@@ -86,7 +92,7 @@ function addProject() {
     title: taskTitle.value,
     description: taskDescription.value,
     date: dueDate.value,
-    striked: false
+    striked: false,
   });
   console.log(taskArray);
   (0,_index__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)();
@@ -96,10 +102,6 @@ function cancelForm() {
   taskForm.style.display = "none";
   (0,_index__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)();
 }
-
-
-
-
 
 
 
@@ -121,7 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function changeStatus(e) {
-  
+  console.log(e.target)
   if (e.target.parentNode.classList.value !== "striked") {
     e.target.parentNode.classList.add("striked");
     _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[0].striked = true;

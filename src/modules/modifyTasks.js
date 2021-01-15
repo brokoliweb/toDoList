@@ -2,7 +2,7 @@ import { taskArray } from "./addTasks";
 
 
 function changeStatus(e) {
-  
+  console.log(e.target)
   if (e.target.parentNode.classList.value !== "striked") {
     e.target.parentNode.classList.add("striked");
     taskArray[0].striked = true;

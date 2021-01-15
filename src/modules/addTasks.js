@@ -20,12 +20,18 @@ function openProjectForm() {
 }
 
 function addProject() {
+  if (taskTitle.value === "") {
+    alert("Title can not be empty");
+    return;
+  }
   let tableRow = document.createElement("tr");
   taskList.appendChild(tableRow);
   let tableColumn1 = document.createElement("td");
   let tableColumn2 = document.createElement("td");
-  tableColumn1.textContent = `${taskTitle.value} || ${taskDescription.value || "no description"}`;
-  tableColumn2.textContent = (dueDate.value || "no due date");
+  tableColumn1.textContent = `${taskTitle.value} || ${
+    taskDescription.value || "no description"
+  }`;
+  tableColumn2.textContent = dueDate.value || "no due date";
   tableRow.appendChild(tableColumn1);
   tableRow.appendChild(tableColumn2);
   taskForm.style.display = "none";
@@ -33,7 +39,7 @@ function addProject() {
     title: taskTitle.value,
     description: taskDescription.value,
     date: dueDate.value,
-    striked: false
+    striked: false,
   });
   console.log(taskArray);
   renderTaskList();
@@ -43,9 +49,5 @@ function cancelForm() {
   taskForm.style.display = "none";
   renderTaskList();
 }
-
-
-
-
 
 export { taskArray, openProjectForm };
