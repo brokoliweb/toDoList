@@ -3467,6 +3467,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "taskList": () => /* binding */ taskList,
 /* harmony export */   "taskArray": () => /* binding */ taskArray,
+/* harmony export */   "todayTaskArray": () => /* binding */ todayTaskArray,
+/* harmony export */   "weekTaskArray": () => /* binding */ weekTaskArray,
 /* harmony export */   "openProjectForm": () => /* binding */ openProjectForm
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../index */ "./src/index.js");
@@ -3564,12 +3566,6 @@ function addProject() {
       striked: false,
     });
   }
-
-  console.log(taskArray);
-  console.log(weekTaskArray);
-  console.log(todayTaskArray);
-
-
   (0,_index__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)();
 }
 
@@ -3577,6 +3573,8 @@ function cancelForm() {
   taskForm.style.display = "none";
   (0,_index__WEBPACK_IMPORTED_MODULE_0__.renderTaskList)();
 }
+
+
 
 
 
@@ -3601,19 +3599,57 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function listAllTasks(e) {
-  console.log(e);
+ 
+  
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
-  _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray
+  for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray.length; i ++) {
+    let tableRow = document.createElement("tr");
+    tableRow.id = i;
+    _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.appendChild(tableRow);
+    let tableColumn1 = document.createElement("td");
+    let tableColumn2 = document.createElement("td");
+    tableColumn1.textContent = `${_addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].title} || ${
+      _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].taskDescription || "no description"
+    }`;
+    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].date || "no due date";
+    tableRow.appendChild(tableColumn1);
+    tableRow.appendChild(tableColumn2);
+  }
+  
 }
 
 function listTodayTasks(e) {
-  console.log(e);
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
+  for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray.length; i ++) {
+    let tableRow = document.createElement("tr");
+    tableRow.id = i;
+    _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.appendChild(tableRow);
+    let tableColumn1 = document.createElement("td");
+    let tableColumn2 = document.createElement("td");
+    tableColumn1.textContent = `${_addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].title} || ${
+      _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].taskDescription || "no description"
+    }`;
+    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].date || "no due date";
+    tableRow.appendChild(tableColumn1);
+    tableRow.appendChild(tableColumn2);
+  }
 }
 
 function listWeekTasks(e) {
-  console.log(e);
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
+  for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray.length; i ++) {
+    let tableRow = document.createElement("tr");
+    tableRow.id = i;
+    _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.appendChild(tableRow);
+    let tableColumn1 = document.createElement("td");
+    let tableColumn2 = document.createElement("td");
+    tableColumn1.textContent = `${_addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].title} || ${
+      _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].taskDescription || "no description"
+    }`;
+    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].date || "no due date";
+    tableRow.appendChild(tableColumn1);
+    tableRow.appendChild(tableColumn2);
+  }
 }
 
 
