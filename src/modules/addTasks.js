@@ -24,8 +24,8 @@ function addProject() {
   taskList.appendChild(tableRow);
   let tableColumn1 = document.createElement("td");
   let tableColumn2 = document.createElement("td");
-  tableColumn1.textContent = `${taskTitle.value} || ${taskDescription.value = "no description"}`;
-  tableColumn2.textContent = dueDate.value = "no due date";
+  tableColumn1.textContent = `${taskTitle.value} || ${taskDescription.value || "no description"}`;
+  tableColumn2.textContent = (dueDate.value || "no due date");
   tableRow.appendChild(tableColumn1);
   tableRow.appendChild(tableColumn2);
   taskForm.style.display = "none";
