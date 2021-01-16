@@ -1,17 +1,19 @@
 import { taskList, taskArray, todayTaskArray, weekTaskArray } from "./addTasks";
 import { allTasks, today, week, renderTaskList } from "../index";
 
-
 function listAllTasks(e) {
- 
-  allTasks.style.color = 'red';
-  today.style.color = 'black';
-  week.style.color = 'black';
+  allTasks.style.color = "red";
+  today.style.color = "black";
+  week.style.color = "black";
   taskList.innerHTML = "";
-  for (let i = 0; i < taskArray.length; i ++) {
+  for (let i = 0; i < taskArray.length; i++) {
     let tableRow = document.createElement("tr");
     tableRow.id = i;
+    if (taskArray[i].striked === true) {
+      tableRow.classList.add("striked");
+    }
     taskList.appendChild(tableRow);
+
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
     tableColumn1.textContent = `${taskArray[i].title} || ${
@@ -25,14 +27,17 @@ function listAllTasks(e) {
 }
 
 function listTodayTasks(e) {
-
-  allTasks.style.color = 'black';
-  today.style.color = 'red';
-  week.style.color = 'black';
+  console.log(todayTaskArray);
+  allTasks.style.color = "black";
+  today.style.color = "red";
+  week.style.color = "black";
   taskList.innerHTML = "";
-  for (let i = 0; i < todayTaskArray.length; i ++) {
+  for (let i = 0; i < todayTaskArray.length; i++) {
     let tableRow = document.createElement("tr");
     tableRow.id = i;
+    if (todayTaskArray[i].striked === true) {
+      tableRow.classList.add("striked");
+    }
     taskList.appendChild(tableRow);
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
@@ -47,13 +52,16 @@ function listTodayTasks(e) {
 }
 
 function listWeekTasks(e) {
-  allTasks.style.color = 'black';
-  today.style.color = 'black';
-  week.style.color = 'red';
+  allTasks.style.color = "black";
+  today.style.color = "black";
+  week.style.color = "red";
   taskList.innerHTML = "";
-  for (let i = 0; i < weekTaskArray.length; i ++) {
+  for (let i = 0; i < weekTaskArray.length; i++) {
     let tableRow = document.createElement("tr");
     tableRow.id = i;
+    if (weekTaskArray[i].striked === true) {
+      tableRow.classList.add("striked");
+    }
     taskList.appendChild(tableRow);
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");

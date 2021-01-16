@@ -8,8 +8,8 @@ import {
 import { listAllTasks, listTodayTasks, listWeekTasks } from "./listTasks";
 
 const taskArray = [];
-const todayTaskArray = [];
-const weekTaskArray = [];
+let todayTaskArray = [];
+let weekTaskArray = [];
 
 // get DOM Elements
 const checkButton = document.getElementById("check-button");
@@ -26,7 +26,6 @@ cancelButton.addEventListener("click", cancelForm);
 
 function openProjectForm() {
   taskForm.style.display = "block";
-  listAllTasks();
 }
 
 function addProject() {
@@ -43,61 +42,67 @@ function addProject() {
     taskDescription.value || "no description"
   }`;
   tableColumn2.textContent = dueDate.value || "no due date";
+
   tableRow.appendChild(tableColumn1);
   tableRow.appendChild(tableColumn2);
   taskForm.style.display = "none";
 
-  let todaysDate = parseISO(format(new Date(), "yyyy-MM-dd"));
-  let userDate = parseISO(dueDate.value);
-
-  if (compareAsc(todaysDate, userDate) === 0) {
-    todayTaskArray.push({
-      title: taskTitle.value,
-      description: taskDescription.value,
-      date: dueDate.value,
-      striked: false,
-    });
-    weekTaskArray.push({
-      title: taskTitle.value,
-      description: taskDescription.value,
-      date: dueDate.value,
-      striked: false,
-    });
-    taskArray.push({
-      title: taskTitle.value,
-      description: taskDescription.value,
-      date: dueDate.value,
-      striked: false,
-    });
-  } else if (
-    differenceInCalendarWeeks(todaysDate, userDate, { weekStartsOn: 1 }) === 0
-  ) {
-    weekTaskArray.push({
-      title: taskTitle.value,
-      description: taskDescription.value,
-      date: dueDate.value,
-      striked: false,
-    });
-    taskArray.push({
-      title: taskTitle.value,
-      description: taskDescription.value,
-      date: dueDate.value,
-      striked: false,
-    });
-  } else {
-    taskArray.push({
-      title: taskTitle.value,
-      description: taskDescription.value,
-      date: dueDate.value,
-      striked: false,
-    });
+  taskArray.push({
+    title: taskTitle.value,
+    description: taskDescription.value,
+    date: dueDate.value,
+    striked: false,
+  });
+  if (taskArray[tableRow.id].date === "") {
+    taskArray[tableRow.id].date = "none";
   }
-  renderTaskList();
+  taskArray.sort((a, b) => (a.date > b.date ? 1 : -1));
+  listAllTasks();
+
+  createTodayTaskArray();
+  createWeekTaskArray();
 }
 
 function cancelForm() {
   taskForm.style.display = "none";
   renderTaskList();
+}
+
+function createTodayTaskArray() {
+  todayTaskArray = [];
+  let todaysDate = parseISO(format(new Date(), "yyyy-MM-dd"));
+
+  taskArray.map((x) => {
+    let userDate = parseISO(x.date);
+
+    if (compareAsc(todaysDate, userDate) === 0) {
+      todayTaskArray.push({
+        title: x.title,
+        description: x.description,
+        date: x.date,
+        striked: x.striked,
+      });
+    }
+  });
+}
+
+function createWeekTaskArray() {
+  weekTaskArray = [];
+  let todaysDate = parseISO(format(new Date(), "yyyy-MM-dd"));
+
+  taskArray.map((x) => {
+    let userDate = parseISO(x.date);
+    if (
+      differenceInCalendarWeeks(todaysDate, userDate, { weekStartsOn: 1 }) === 0
+    ) {
+      weekTaskArray.push({
+        title: x.title,
+        description: x.description,
+        date: x.date,
+        striked: x.striked,
+      });
+    }
+  });
 }
 
 const clearButton = document.querySelector(".clear-tasks");
@@ -110,20 +115,9 @@ function clearTasks() {
       taskArray.splice(i, 1);
     }
   }
-  console.log(taskArray);
-  for (let i = 0; i < todayTaskArray.length; i++) {
-    if (todayTaskArray[i].striked === true) {
-      todayTaskArray.splice(i, 1);
-    }
-  }
-  console.log(todayTaskArray);
+  createTodayTaskArray();
+  createWeekTaskArray();
 
-  for (let i = 0; i < weekTaskArray.length; i++) {
-    if (weekTaskArray[i].striked === true) {
-      weekTaskArray.splice(i, 1);
-    }
-  }
-  
   renderAfterClear();
 }
 
@@ -132,9 +126,17 @@ function renderAfterClear() {
     listAllTasks();
   } else if (today.style.color === "red") {
     listTodayTasks();
-  } else if (week.style.color === 'red') {
+  } else if (week.style.color === "red") {
     listWeekTasks();
   }
 }
 
-export { taskList, taskArray, todayTaskArray, weekTaskArray, openProjectForm };
+export {
+  taskList,
+  taskArray,
+  todayTaskArray,
+  weekTaskArray,
+  createTodayTaskArray,
+  createWeekTaskArray,
+  openProjectForm,
+};

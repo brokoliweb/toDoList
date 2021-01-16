@@ -27,5 +27,4 @@ function renderTaskList() {
   }
 }
 
-
 export { renderTaskList, allTasks, today, week };
