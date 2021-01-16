@@ -2,7 +2,7 @@ import { taskList, taskArray, todayTaskArray, weekTaskArray } from "./addTasks";
 import { allTasks, today, week, renderTaskList } from "../index";
 
 function listAllTasks(e) {
-  allTasks.style.color = "red";
+  allTasks.style.color = "#FAE03A";
   today.style.color = "black";
   week.style.color = "black";
   taskList.innerHTML = "";
@@ -28,7 +28,7 @@ function listAllTasks(e) {
 function listTodayTasks(e) {
   
   allTasks.style.color = "black";
-  today.style.color = "red";
+  today.style.color = "#FAE03A";
   week.style.color = "black";
   taskList.innerHTML = "";
   for (let i = 0; i < todayTaskArray.length; i++) {
@@ -52,7 +52,7 @@ function listTodayTasks(e) {
 function listWeekTasks(e) {
   allTasks.style.color = "black";
   today.style.color = "black";
-  week.style.color = "red";
+  week.style.color = "#FAE03A";
   taskList.innerHTML = "";
   for (let i = 0; i < weekTaskArray.length; i++) {
     let tableRow = document.createElement("tr");

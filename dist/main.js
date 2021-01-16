@@ -3585,6 +3585,7 @@ function clearTasks() {
     }
   }
   taskArray = newArray;
+  (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listAllTasks)();
   createTodayTaskArray();
   createWeekTaskArray();
 
@@ -3592,11 +3593,11 @@ function clearTasks() {
 }
 
 function renderAfterClear() {
-  if (_index__WEBPACK_IMPORTED_MODULE_0__.allTasks.style.color === "red") {
+  if (_index__WEBPACK_IMPORTED_MODULE_0__.allTasks.style.color === "#FAE03A") {
     (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listAllTasks)();
-  } else if (_index__WEBPACK_IMPORTED_MODULE_0__.today.style.color === "red") {
+  } else if (_index__WEBPACK_IMPORTED_MODULE_0__.today.style.color === "#FAE03A") {
     (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listTodayTasks)();
-  } else if (_index__WEBPACK_IMPORTED_MODULE_0__.week.style.color === "red") {
+  } else if (_index__WEBPACK_IMPORTED_MODULE_0__.week.style.color === "#FAE03A") {
     (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listWeekTasks)();
   }
 }
@@ -3624,7 +3625,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function listAllTasks(e) {
-  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "red";
+  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "#FAE03A";
   _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "black";
   _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "black";
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
@@ -3650,7 +3651,7 @@ function listAllTasks(e) {
 function listTodayTasks(e) {
   
   _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "black";
-  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "red";
+  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "#FAE03A";
   _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "black";
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
   for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray.length; i++) {
@@ -3674,7 +3675,7 @@ function listTodayTasks(e) {
 function listWeekTasks(e) {
   _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "black";
   _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "black";
-  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "red";
+  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "#FAE03A";
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
   for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray.length; i++) {
     let tableRow = document.createElement("tr");

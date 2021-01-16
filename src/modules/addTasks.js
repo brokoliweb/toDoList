@@ -109,6 +109,7 @@ function clearTasks() {
     }
   }
   taskArray = newArray;
+  listAllTasks();
   createTodayTaskArray();
   createWeekTaskArray();
 
@@ -116,11 +117,11 @@ function clearTasks() {
 }
 
 function renderAfterClear() {
-  if (allTasks.style.color === "red") {
+  if (allTasks.style.color === "#FAE03A") {
     listAllTasks();
-  } else if (today.style.color === "red") {
+  } else if (today.style.color === "#FAE03A") {
     listTodayTasks();
-  } else if (week.style.color === "red") {
+  } else if (week.style.color === "#FAE03A") {
     listWeekTasks();
   }
 }
