@@ -17,9 +17,8 @@ function listAllTasks(e) {
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
     tableColumn1.textContent = `${taskArray[i].title} || ${
-      taskArray[i].taskDescription || "no description"
-    }`;
-    tableColumn2.textContent = taskArray[i].date || "no due date";
+      taskArray[i].description}`;
+    tableColumn2.textContent = taskArray[i].date;
     tableRow.appendChild(tableColumn1);
     tableRow.appendChild(tableColumn2);
   }
@@ -27,7 +26,7 @@ function listAllTasks(e) {
 }
 
 function listTodayTasks(e) {
-  console.log(todayTaskArray);
+  
   allTasks.style.color = "black";
   today.style.color = "red";
   week.style.color = "black";
@@ -42,9 +41,8 @@ function listTodayTasks(e) {
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
     tableColumn1.textContent = `${todayTaskArray[i].title} || ${
-      todayTaskArray[i].taskDescription || "no description"
-    }`;
-    tableColumn2.textContent = todayTaskArray[i].date || "no due date";
+      todayTaskArray[i].description}`;
+    tableColumn2.textContent = todayTaskArray[i].date;
     tableRow.appendChild(tableColumn1);
     tableRow.appendChild(tableColumn2);
   }
@@ -66,9 +64,8 @@ function listWeekTasks(e) {
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
     tableColumn1.textContent = `${weekTaskArray[i].title} || ${
-      weekTaskArray[i].taskDescription || "no description"
-    }`;
-    tableColumn2.textContent = weekTaskArray[i].date || "no due date";
+      weekTaskArray[i].description}`;
+    tableColumn2.textContent = weekTaskArray[i].date;
     tableRow.appendChild(tableColumn1);
     tableRow.appendChild(tableColumn2);
   }

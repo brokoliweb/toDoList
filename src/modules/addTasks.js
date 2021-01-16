@@ -7,7 +7,7 @@ import {
 } from "date-fns";
 import { listAllTasks, listTodayTasks, listWeekTasks } from "./listTasks";
 
-const taskArray = [];
+let taskArray = [];
 let todayTaskArray = [];
 let weekTaskArray = [];
 
@@ -33,29 +33,16 @@ function addProject() {
     alert("Title can not be empty");
     return;
   }
-  let tableRow = document.createElement("tr");
-  tableRow.id = `${taskArray.length}`;
-  taskList.appendChild(tableRow);
-  let tableColumn1 = document.createElement("td");
-  let tableColumn2 = document.createElement("td");
-  tableColumn1.textContent = `${taskTitle.value} || ${
-    taskDescription.value || "no description"
-  }`;
-  tableColumn2.textContent = dueDate.value || "no due date";
 
-  tableRow.appendChild(tableColumn1);
-  tableRow.appendChild(tableColumn2);
   taskForm.style.display = "none";
 
   taskArray.push({
     title: taskTitle.value,
-    description: taskDescription.value,
-    date: dueDate.value,
+    description: taskDescription.value || "no description",
+    date: dueDate.value || "no due date",
     striked: false,
   });
-  if (taskArray[tableRow.id].date === "") {
-    taskArray[tableRow.id].date = "none";
-  }
+
   taskArray.sort((a, b) => (a.date > b.date ? 1 : -1));
   listAllTasks();
 
@@ -110,11 +97,18 @@ const clearButton = document.querySelector(".clear-tasks");
 clearButton.addEventListener("click", clearTasks);
 
 function clearTasks() {
+  let newArray = [];
   for (let i = 0; i < taskArray.length; i++) {
-    if (taskArray[i].striked === true) {
-      taskArray.splice(i, 1);
+    if (taskArray[i].striked === false) {
+      newArray.push({
+        title: taskArray[i].title,
+        description: taskArray[i].description,
+        date: taskArray[i].date,
+        striked: taskArray[i].striked,
+      });
     }
   }
+  taskArray = newArray;
   createTodayTaskArray();
   createWeekTaskArray();
 
