@@ -1,7 +1,11 @@
-import { renderTaskList } from "../index";
-import { format, parseISO, compareAsc, differenceInCalendarWeeks } from "date-fns";
-import { listAllTasks, listTodayTasks, listWeekTasks } from './listTasks'
-
+import { renderTaskList, allTasks, today, week } from "../index";
+import {
+  format,
+  parseISO,
+  compareAsc,
+  differenceInCalendarWeeks,
+} from "date-fns";
+import { listAllTasks, listTodayTasks, listWeekTasks } from "./listTasks";
 
 const taskArray = [];
 const todayTaskArray = [];
@@ -45,9 +49,8 @@ function addProject() {
 
   let todaysDate = parseISO(format(new Date(), "yyyy-MM-dd"));
   let userDate = parseISO(dueDate.value);
-  
 
-  if ((compareAsc(todaysDate, userDate) === 0)) {
+  if (compareAsc(todaysDate, userDate) === 0) {
     todayTaskArray.push({
       title: taskTitle.value,
       description: taskDescription.value,
@@ -66,7 +69,9 @@ function addProject() {
       date: dueDate.value,
       striked: false,
     });
-  } else if (differenceInCalendarWeeks(todaysDate, userDate, { weekStartsOn: 1 }) === 0) {
+  } else if (
+    differenceInCalendarWeeks(todaysDate, userDate, { weekStartsOn: 1 }) === 0
+  ) {
     weekTaskArray.push({
       title: taskTitle.value,
       description: taskDescription.value,
@@ -95,6 +100,41 @@ function cancelForm() {
   renderTaskList();
 }
 
+const clearButton = document.querySelector(".clear-tasks");
 
+clearButton.addEventListener("click", clearTasks);
+
+function clearTasks() {
+  for (let i = 0; i < taskArray.length; i++) {
+    if (taskArray[i].striked === true) {
+      taskArray.splice(i, 1);
+    }
+  }
+  console.log(taskArray);
+  for (let i = 0; i < todayTaskArray.length; i++) {
+    if (todayTaskArray[i].striked === true) {
+      todayTaskArray.splice(i, 1);
+    }
+  }
+  console.log(todayTaskArray);
+
+  for (let i = 0; i < weekTaskArray.length; i++) {
+    if (weekTaskArray[i].striked === true) {
+      weekTaskArray.splice(i, 1);
+    }
+  }
+  
+  renderAfterClear();
+}
+
+function renderAfterClear() {
+  if (allTasks.style.color === "red") {
+    listAllTasks();
+  } else if (today.style.color === "red") {
+    listTodayTasks();
+  } else if (week.style.color === 'red') {
+    listWeekTasks();
+  }
+}
 
 export { taskList, taskArray, todayTaskArray, weekTaskArray, openProjectForm };
