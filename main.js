@@ -3483,7 +3483,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const taskArray = [];
+let taskArray = [];
 let todayTaskArray = [];
 let weekTaskArray = [];
 
@@ -3509,29 +3509,16 @@ function addProject() {
     alert("Title can not be empty");
     return;
   }
-  let tableRow = document.createElement("tr");
-  tableRow.id = `${taskArray.length}`;
-  taskList.appendChild(tableRow);
-  let tableColumn1 = document.createElement("td");
-  let tableColumn2 = document.createElement("td");
-  tableColumn1.textContent = `${taskTitle.value} || ${
-    taskDescription.value || "no description"
-  }`;
-  tableColumn2.textContent = dueDate.value || "no due date";
 
-  tableRow.appendChild(tableColumn1);
-  tableRow.appendChild(tableColumn2);
   taskForm.style.display = "none";
 
   taskArray.push({
     title: taskTitle.value,
-    description: taskDescription.value,
-    date: dueDate.value,
+    description: taskDescription.value || "no description",
+    date: dueDate.value || "no due date",
     striked: false,
   });
-  if (taskArray[tableRow.id].date === "") {
-    taskArray[tableRow.id].date = "none";
-  }
+
   taskArray.sort((a, b) => (a.date > b.date ? 1 : -1));
   (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listAllTasks)();
 
@@ -3586,11 +3573,18 @@ const clearButton = document.querySelector(".clear-tasks");
 clearButton.addEventListener("click", clearTasks);
 
 function clearTasks() {
+  let newArray = [];
   for (let i = 0; i < taskArray.length; i++) {
-    if (taskArray[i].striked === true) {
-      taskArray.splice(i, 1);
+    if (taskArray[i].striked === false) {
+      newArray.push({
+        title: taskArray[i].title,
+        description: taskArray[i].description,
+        date: taskArray[i].date,
+        striked: taskArray[i].striked,
+      });
     }
   }
+  taskArray = newArray;
   createTodayTaskArray();
   createWeekTaskArray();
 
@@ -3645,9 +3639,8 @@ function listAllTasks(e) {
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
     tableColumn1.textContent = `${_addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].title} || ${
-      _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].taskDescription || "no description"
-    }`;
-    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].date || "no due date";
+      _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].description}`;
+    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].date;
     tableRow.appendChild(tableColumn1);
     tableRow.appendChild(tableColumn2);
   }
@@ -3655,7 +3648,7 @@ function listAllTasks(e) {
 }
 
 function listTodayTasks(e) {
-  console.log(_addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray);
+  
   _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "black";
   _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "red";
   _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "black";
@@ -3670,9 +3663,8 @@ function listTodayTasks(e) {
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
     tableColumn1.textContent = `${_addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].title} || ${
-      _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].taskDescription || "no description"
-    }`;
-    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].date || "no due date";
+      _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].description}`;
+    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].date;
     tableRow.appendChild(tableColumn1);
     tableRow.appendChild(tableColumn2);
   }
@@ -3694,9 +3686,8 @@ function listWeekTasks(e) {
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
     tableColumn1.textContent = `${_addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].title} || ${
-      _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].taskDescription || "no description"
-    }`;
-    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].date || "no due date";
+      _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].description}`;
+    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].date;
     tableRow.appendChild(tableColumn1);
     tableRow.appendChild(tableColumn2);
   }
@@ -3726,13 +3717,13 @@ function changeStatus(e) {
   if (e.target.parentNode.classList.value !== "striked") {
     e.target.parentNode.classList.add("striked");
     _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[indexNum].striked = true;
-    _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[indexNum].striked = true;
-    _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[indexNum].striked = true;
+    (0,_addTasks__WEBPACK_IMPORTED_MODULE_0__.createTodayTaskArray)();
+    (0,_addTasks__WEBPACK_IMPORTED_MODULE_0__.createWeekTaskArray)();
   } else {
     e.target.parentNode.classList.remove("striked");
     _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[indexNum].striked = false;
-    _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[indexNum].striked = false;
-    _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[indexNum].striked = false;
+    (0,_addTasks__WEBPACK_IMPORTED_MODULE_0__.createTodayTaskArray)();
+    (0,_addTasks__WEBPACK_IMPORTED_MODULE_0__.createWeekTaskArray)();
   }
 }
 
