@@ -1,18 +1,18 @@
 body {
-    
-    font-family: monospace;
-    font-size: 16px;
+  font-family: monospace;
+  font-size: 16px;
 }
 
-div.task-list, .todolist {
-    height: 96vh;
-    padding: 2vh;
+div.task-list,
+.todolist {
+  min-height: 92vh;
+  padding: 2vh;
 }
 
 h2 {
   font-size: 1em;
   font-weight: bold;
-  padding: 1em;
+  padding: 1vw;
 }
 
 h2:hover {
@@ -20,43 +20,61 @@ h2:hover {
 }
 
 .task-list {
-    background: rgb(155, 128, 128);
-    
+  background: #fae03a;
 }
 
 button {
-    margin: 1em;
+  margin: 1vw;
+  padding: 0.4vw;
+  background-color: #7561ff;
+  color: white;
 }
 
+button:hover {
+  background-color: #321fad;
+}
+
+.clear-tasks {
+  background-color: gray;
+}
+
+.clear-tasks:hover {
+  background-color: red;
+}
 
 #grid-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr;
 }
 
 form {
- display: none;
- padding-left: 1em;
- padding-bottom: 2em;
-
+  display: none;
+  padding: 1vw;
 }
 
-input, label {
+input,
+label {
   display: block;
+  width: 150px;
 }
 
 span:hover {
   cursor: pointer;
-  
 }
 
-
+table {
+  margin: 1vw;
+  width: 90%;
+}
 
 tr {
-  margin: 1em;
   line-height: 2em;
   cursor: pointer;
+}
+
+tr:hover {
+  background-color: #ddd;
 }
 
 td {
@@ -66,4 +84,10 @@ td {
 
 .striked {
   text-decoration: line-through;
+}
+
+footer {
+  background-color: #321fad;
+  color: white;
+  text-align: center;
 }

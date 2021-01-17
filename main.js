@@ -3420,9 +3420,11 @@ function toDate(argument) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "renderTaskList": () => /* binding */ renderTaskList,
+/* harmony export */   "storeLocal": () => /* binding */ storeLocal,
 /* harmony export */   "allTasks": () => /* binding */ allTasks,
 /* harmony export */   "today": () => /* binding */ today,
-/* harmony export */   "week": () => /* binding */ week
+/* harmony export */   "week": () => /* binding */ week,
+/* harmony export */   "taskArray": () => /* binding */ taskArray
 /* harmony export */ });
 /* harmony import */ var _modules_addTasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/addTasks */ "./src/modules/addTasks.js");
 /* harmony import */ var _modules_modifyTasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modifyTasks */ "./src/modules/modifyTasks.js");
@@ -3430,6 +3432,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+let taskArray = [];
 
 // get DOM Elements
 const addProjectButton = document.querySelector(".add-new-task");
@@ -3452,6 +3456,30 @@ function renderTaskList() {
   }
 }
 
+// store taskArray in local storage
+
+function storeLocal() {
+  let jsontaskArray = JSON.stringify(taskArray);
+
+  window.localStorage.setItem("taskArray", jsontaskArray);
+}
+
+// load from storage
+
+(function loadStorage() {
+  let getItem = localStorage.getItem("taskArray");
+
+  let item = JSON.parse(getItem);
+  if (!item) {
+    return;
+  } else {
+    taskArray = item;
+    (0,_modules_listTasks__WEBPACK_IMPORTED_MODULE_2__.listAllTasks)();
+  }
+})();
+
+
+
 
 
 
@@ -3466,7 +3494,7 @@ function renderTaskList() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "taskList": () => /* binding */ taskList,
-/* harmony export */   "taskArray": () => /* binding */ taskArray,
+/* harmony export */   "taskArray": () => /* reexport safe */ _index__WEBPACK_IMPORTED_MODULE_0__.taskArray,
 /* harmony export */   "todayTaskArray": () => /* binding */ todayTaskArray,
 /* harmony export */   "weekTaskArray": () => /* binding */ weekTaskArray,
 /* harmony export */   "createTodayTaskArray": () => /* binding */ createTodayTaskArray,
@@ -3483,7 +3511,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let taskArray = [];
+
 let todayTaskArray = [];
 let weekTaskArray = [];
 
@@ -3512,18 +3540,19 @@ function addProject() {
 
   taskForm.style.display = "none";
 
-  taskArray.push({
+  _index__WEBPACK_IMPORTED_MODULE_0__.taskArray.push({
     title: taskTitle.value,
     description: taskDescription.value || "no description",
     date: dueDate.value || "no due date",
     striked: false,
   });
 
-  taskArray.sort((a, b) => (a.date > b.date ? 1 : -1));
+  _index__WEBPACK_IMPORTED_MODULE_0__.taskArray.sort((a, b) => (a.date > b.date ? 1 : -1));
   (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listAllTasks)();
 
   createTodayTaskArray();
   createWeekTaskArray();
+  (0,_index__WEBPACK_IMPORTED_MODULE_0__.storeLocal)();
 }
 
 function cancelForm() {
@@ -3535,7 +3564,7 @@ function createTodayTaskArray() {
   todayTaskArray = [];
   let todaysDate = (0,date_fns__WEBPACK_IMPORTED_MODULE_2__.default)((0,date_fns__WEBPACK_IMPORTED_MODULE_3__.default)(new Date(), "yyyy-MM-dd"));
 
-  taskArray.map((x) => {
+  _index__WEBPACK_IMPORTED_MODULE_0__.taskArray.map((x) => {
     let userDate = (0,date_fns__WEBPACK_IMPORTED_MODULE_2__.default)(x.date);
 
     if ((0,date_fns__WEBPACK_IMPORTED_MODULE_4__.default)(todaysDate, userDate) === 0) {
@@ -3553,7 +3582,7 @@ function createWeekTaskArray() {
   weekTaskArray = [];
   let todaysDate = (0,date_fns__WEBPACK_IMPORTED_MODULE_2__.default)((0,date_fns__WEBPACK_IMPORTED_MODULE_3__.default)(new Date(), "yyyy-MM-dd"));
 
-  taskArray.map((x) => {
+  _index__WEBPACK_IMPORTED_MODULE_0__.taskArray.map((x) => {
     let userDate = (0,date_fns__WEBPACK_IMPORTED_MODULE_2__.default)(x.date);
     if (
       (0,date_fns__WEBPACK_IMPORTED_MODULE_5__.default)(todaysDate, userDate, { weekStartsOn: 1 }) === 0
@@ -3574,17 +3603,17 @@ clearButton.addEventListener("click", clearTasks);
 
 function clearTasks() {
   let newArray = [];
-  for (let i = 0; i < taskArray.length; i++) {
-    if (taskArray[i].striked === false) {
+  for (let i = 0; i < _index__WEBPACK_IMPORTED_MODULE_0__.taskArray.length; i++) {
+    if (_index__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].striked === false) {
       newArray.push({
-        title: taskArray[i].title,
-        description: taskArray[i].description,
-        date: taskArray[i].date,
-        striked: taskArray[i].striked,
+        title: _index__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].title,
+        description: _index__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].description,
+        date: _index__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].date,
+        striked: _index__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].striked,
       });
     }
   }
-  taskArray = newArray;
+  _index__WEBPACK_IMPORTED_MODULE_0__.taskArray = newArray;
   (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listAllTasks)();
   createTodayTaskArray();
   createWeekTaskArray();
@@ -3593,11 +3622,11 @@ function clearTasks() {
 }
 
 function renderAfterClear() {
-  if (_index__WEBPACK_IMPORTED_MODULE_0__.allTasks.style.color === "#FAE03A") {
+  if (_index__WEBPACK_IMPORTED_MODULE_0__.allTasks.style.color === "red") {
     (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listAllTasks)();
-  } else if (_index__WEBPACK_IMPORTED_MODULE_0__.today.style.color === "#FAE03A") {
+  } else if (_index__WEBPACK_IMPORTED_MODULE_0__.today.style.color === "red") {
     (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listTodayTasks)();
-  } else if (_index__WEBPACK_IMPORTED_MODULE_0__.week.style.color === "#FAE03A") {
+  } else if (_index__WEBPACK_IMPORTED_MODULE_0__.week.style.color === "red") {
     (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listWeekTasks)();
   }
 }
@@ -3625,23 +3654,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function listAllTasks(e) {
-  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "#FAE03A";
+  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "red";
   _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "black";
   _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "black";
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
-  for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray.length; i++) {
+  for (let i = 0; i < _index__WEBPACK_IMPORTED_MODULE_1__.taskArray.length; i++) {
     let tableRow = document.createElement("tr");
     tableRow.id = i;
-    if (_addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].striked === true) {
+    if (_index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].striked === true) {
       tableRow.classList.add("striked");
     }
     _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.appendChild(tableRow);
 
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
-    tableColumn1.textContent = `${_addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].title} || ${
-      _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].description}`;
-    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].date;
+    tableColumn1.textContent = `${_index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].title} || ${
+      _index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].description}`;
+    tableColumn2.textContent = _index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].date;
     tableRow.appendChild(tableColumn1);
     tableRow.appendChild(tableColumn2);
   }
@@ -3651,7 +3680,7 @@ function listAllTasks(e) {
 function listTodayTasks(e) {
   
   _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "black";
-  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "#FAE03A";
+  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "red";
   _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "black";
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
   for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray.length; i++) {
@@ -3675,7 +3704,7 @@ function listTodayTasks(e) {
 function listWeekTasks(e) {
   _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "black";
   _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "black";
-  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "#FAE03A";
+  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "red";
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
   for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray.length; i++) {
     let tableRow = document.createElement("tr");
