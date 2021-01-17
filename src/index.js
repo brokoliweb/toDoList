@@ -6,6 +6,8 @@ import {
   listWeekTasks,
 } from "./modules/listTasks";
 
+let taskArray = [];
+
 // get DOM Elements
 const addProjectButton = document.querySelector(".add-new-task");
 
@@ -27,4 +29,28 @@ function renderTaskList() {
   }
 }
 
-export { renderTaskList, allTasks, today, week };
+// store taskArray in local storage
+
+function storeLocal() {
+  let jsontaskArray = JSON.stringify(taskArray);
+
+  window.localStorage.setItem("taskArray", jsontaskArray);
+}
+
+// load from storage
+
+(function loadStorage() {
+  let getItem = localStorage.getItem("taskArray");
+
+  let item = JSON.parse(getItem);
+  if (!item) {
+    return;
+  } else {
+    taskArray = item;
+    listAllTasks();
+  }
+})();
+
+
+
+export { renderTaskList, storeLocal, allTasks, today, week, taskArray };

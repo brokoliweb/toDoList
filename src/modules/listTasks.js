@@ -1,8 +1,8 @@
-import { taskList, taskArray, todayTaskArray, weekTaskArray } from "./addTasks";
-import { allTasks, today, week, renderTaskList } from "../index";
+import { taskList, todayTaskArray, weekTaskArray } from "./addTasks";
+import { allTasks, today, week, renderTaskList, taskArray } from "../index";
 
 function listAllTasks(e) {
-  allTasks.style.color = "#FAE03A";
+  allTasks.style.color = "red";
   today.style.color = "black";
   week.style.color = "black";
   taskList.innerHTML = "";
@@ -28,7 +28,7 @@ function listAllTasks(e) {
 function listTodayTasks(e) {
   
   allTasks.style.color = "black";
-  today.style.color = "#FAE03A";
+  today.style.color = "red";
   week.style.color = "black";
   taskList.innerHTML = "";
   for (let i = 0; i < todayTaskArray.length; i++) {
@@ -52,7 +52,7 @@ function listTodayTasks(e) {
 function listWeekTasks(e) {
   allTasks.style.color = "black";
   today.style.color = "black";
-  week.style.color = "#FAE03A";
+  week.style.color = "red";
   taskList.innerHTML = "";
   for (let i = 0; i < weekTaskArray.length; i++) {
     let tableRow = document.createElement("tr");

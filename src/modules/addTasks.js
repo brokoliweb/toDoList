@@ -1,4 +1,4 @@
-import { renderTaskList, allTasks, today, week } from "../index";
+import { renderTaskList, storeLocal, allTasks, today, week, taskArray } from "../index";
 import {
   format,
   parseISO,
@@ -7,7 +7,7 @@ import {
 } from "date-fns";
 import { listAllTasks, listTodayTasks, listWeekTasks } from "./listTasks";
 
-let taskArray = [];
+
 let todayTaskArray = [];
 let weekTaskArray = [];
 
@@ -48,6 +48,7 @@ function addProject() {
 
   createTodayTaskArray();
   createWeekTaskArray();
+  storeLocal();
 }
 
 function cancelForm() {
@@ -117,11 +118,11 @@ function clearTasks() {
 }
 
 function renderAfterClear() {
-  if (allTasks.style.color === "#FAE03A") {
+  if (allTasks.style.color === "red") {
     listAllTasks();
-  } else if (today.style.color === "#FAE03A") {
+  } else if (today.style.color === "red") {
     listTodayTasks();
-  } else if (week.style.color === "#FAE03A") {
+  } else if (week.style.color === "red") {
     listWeekTasks();
   }
 }
