@@ -3456,6 +3456,43 @@ function renderTaskList() {
   }
 }
 
+const clearButton = document.querySelector(".clear-tasks");
+
+clearButton.addEventListener("click", clearTasks);
+
+function clearTasks() {
+  let newArray = [];
+  for (let i = 0; i < taskArray.length; i++) {
+    if (taskArray[i].striked === false) {
+      newArray.push({
+        title: taskArray[i].title,
+        description: taskArray[i].description,
+        priority: taskArray[i].priority,
+        date: taskArray[i].date,
+        striked: taskArray[i].striked,
+      });
+    }
+  }
+  
+  taskArray = newArray;
+  
+  (0,_modules_listTasks__WEBPACK_IMPORTED_MODULE_2__.listAllTasks)();
+  (0,_modules_addTasks__WEBPACK_IMPORTED_MODULE_0__.createTodayTaskArray)();
+  (0,_modules_addTasks__WEBPACK_IMPORTED_MODULE_0__.createWeekTaskArray)();
+
+  renderAfterClear();
+}
+
+function renderAfterClear() {
+  if (allTasks.style.color === "red") {
+    (0,_modules_listTasks__WEBPACK_IMPORTED_MODULE_2__.listAllTasks)();
+  } else if (today.style.color === "red") {
+    (0,_modules_listTasks__WEBPACK_IMPORTED_MODULE_2__.listTodayTasks)();
+  } else if (week.style.color === "red") {
+    (0,_modules_listTasks__WEBPACK_IMPORTED_MODULE_2__.listWeekTasks)();
+  }
+}
+
 // store taskArray in local storage
 
 function storeLocal() {
@@ -3475,6 +3512,9 @@ function storeLocal() {
   } else {
     taskArray = item;
     (0,_modules_listTasks__WEBPACK_IMPORTED_MODULE_2__.listAllTasks)();
+    (0,_modules_addTasks__WEBPACK_IMPORTED_MODULE_0__.createTodayTaskArray)();
+    (0,_modules_addTasks__WEBPACK_IMPORTED_MODULE_0__.createWeekTaskArray)();
+    
   }
 })();
 
@@ -3518,9 +3558,12 @@ let weekTaskArray = [];
 // get DOM Elements
 const checkButton = document.getElementById("check-button");
 const cancelButton = document.getElementById("cancel-button");
+
 const taskTitle = document.getElementById("title");
 const taskDescription = document.getElementById("description");
+const taskPriority = document.getElementById("priority");
 const dueDate = document.getElementById("due-date");
+
 const taskForm = document.getElementById("task-form");
 const taskList = document.getElementById("tasks");
 
@@ -3543,6 +3586,7 @@ function addProject() {
   _index__WEBPACK_IMPORTED_MODULE_0__.taskArray.push({
     title: taskTitle.value,
     description: taskDescription.value || "no description",
+    priority: taskPriority.value,
     date: dueDate.value || "no due date",
     striked: false,
   });
@@ -3571,6 +3615,7 @@ function createTodayTaskArray() {
       todayTaskArray.push({
         title: x.title,
         description: x.description,
+        priority: x.priority,
         date: x.date,
         striked: x.striked,
       });
@@ -3590,6 +3635,7 @@ function createWeekTaskArray() {
       weekTaskArray.push({
         title: x.title,
         description: x.description,
+        priority: x.priority,
         date: x.date,
         striked: x.striked,
       });
@@ -3597,39 +3643,7 @@ function createWeekTaskArray() {
   });
 }
 
-const clearButton = document.querySelector(".clear-tasks");
 
-clearButton.addEventListener("click", clearTasks);
-
-function clearTasks() {
-  let newArray = [];
-  for (let i = 0; i < _index__WEBPACK_IMPORTED_MODULE_0__.taskArray.length; i++) {
-    if (_index__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].striked === false) {
-      newArray.push({
-        title: _index__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].title,
-        description: _index__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].description,
-        date: _index__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].date,
-        striked: _index__WEBPACK_IMPORTED_MODULE_0__.taskArray[i].striked,
-      });
-    }
-  }
-  _index__WEBPACK_IMPORTED_MODULE_0__.taskArray = newArray;
-  (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listAllTasks)();
-  createTodayTaskArray();
-  createWeekTaskArray();
-
-  renderAfterClear();
-}
-
-function renderAfterClear() {
-  if (_index__WEBPACK_IMPORTED_MODULE_0__.allTasks.style.color === "red") {
-    (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listAllTasks)();
-  } else if (_index__WEBPACK_IMPORTED_MODULE_0__.today.style.color === "red") {
-    (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listTodayTasks)();
-  } else if (_index__WEBPACK_IMPORTED_MODULE_0__.week.style.color === "red") {
-    (0,_listTasks__WEBPACK_IMPORTED_MODULE_1__.listWeekTasks)();
-  }
-}
 
 
 
@@ -3653,8 +3667,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function listAllTasks(e) {
-  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "red";
+function listAllTasks() {
+  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "green";
   _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "black";
   _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "black";
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
@@ -3664,23 +3678,39 @@ function listAllTasks(e) {
     if (_index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].striked === true) {
       tableRow.classList.add("striked");
     }
+    
     _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.appendChild(tableRow);
 
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
-    tableColumn1.textContent = `${_index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].title} || ${
-      _index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].description}`;
-    tableColumn2.textContent = _index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].date;
+    let tableColumn3 = document.createElement("td");
+    let tableColumn4 = document.createElement("td");
+    tableColumn1.textContent = _index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].title;
+    if (_index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].priority === "none") {
+      tableColumn2.style.background = `#CCD1D1 `;
+    } else if (_index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].priority === "low") {
+      tableColumn2.style.background = `#3498DB`;
+    } else if (_index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].priority === "medium") {
+      tableColumn2.style.background = 'yellow';
+    } else {
+      tableColumn2.style.background = 'red';
+    }
+    tableColumn3.textContent = _index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].description;
+    tableColumn4.textContent = _index__WEBPACK_IMPORTED_MODULE_1__.taskArray[i].date;
+
     tableRow.appendChild(tableColumn1);
     tableRow.appendChild(tableColumn2);
+    tableRow.appendChild(tableColumn3);
+    tableRow.appendChild(tableColumn4);
+
   }
   (0,_index__WEBPACK_IMPORTED_MODULE_1__.renderTaskList)();
 }
 
-function listTodayTasks(e) {
+function listTodayTasks() {
   
   _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "black";
-  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "red";
+  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "green";
   _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "black";
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
   for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray.length; i++) {
@@ -3689,22 +3719,39 @@ function listTodayTasks(e) {
     if (_addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].striked === true) {
       tableRow.classList.add("striked");
     }
+    
     _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.appendChild(tableRow);
+
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
-    tableColumn1.textContent = `${_addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].title} || ${
-      _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].description}`;
-    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].date;
+    let tableColumn3 = document.createElement("td");
+    let tableColumn4 = document.createElement("td");
+    tableColumn1.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].title;
+    if (_addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].priority === "none") {
+      tableColumn2.style.background = `#CCD1D1 `;
+    } else if (_addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].priority === "low") {
+      tableColumn2.style.background = `#3498DB`;
+    } else if (_addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].priority === "medium") {
+      tableColumn2.style.background = 'yellow';
+    } else {
+      tableColumn2.style.background = 'red';
+    }
+    tableColumn3.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].description;
+    tableColumn4.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray[i].date;
+
     tableRow.appendChild(tableColumn1);
     tableRow.appendChild(tableColumn2);
+    tableRow.appendChild(tableColumn3);
+    tableRow.appendChild(tableColumn4);
+
   }
   (0,_index__WEBPACK_IMPORTED_MODULE_1__.renderTaskList)();
 }
 
-function listWeekTasks(e) {
+function listWeekTasks() {
   _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "black";
   _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "black";
-  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "red";
+  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "green";
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
   for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray.length; i++) {
     let tableRow = document.createElement("tr");
@@ -3712,14 +3759,31 @@ function listWeekTasks(e) {
     if (_addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].striked === true) {
       tableRow.classList.add("striked");
     }
+    
     _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.appendChild(tableRow);
+
     let tableColumn1 = document.createElement("td");
     let tableColumn2 = document.createElement("td");
-    tableColumn1.textContent = `${_addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].title} || ${
-      _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].description}`;
-    tableColumn2.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].date;
+    let tableColumn3 = document.createElement("td");
+    let tableColumn4 = document.createElement("td");
+    tableColumn1.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].title;
+    if (_addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].priority === "none") {
+      tableColumn2.style.background = `#CCD1D1 `;
+    } else if (_addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].priority === "low") {
+      tableColumn2.style.background = `#3498DB`;
+    } else if (_addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].priority === "medium") {
+      tableColumn2.style.background = 'yellow';
+    } else {
+      tableColumn2.style.background = 'red';
+    }
+    tableColumn3.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].description;
+    tableColumn4.textContent = _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray[i].date;
+
     tableRow.appendChild(tableColumn1);
     tableRow.appendChild(tableColumn2);
+    tableRow.appendChild(tableColumn3);
+    tableRow.appendChild(tableColumn4);
+
   }
   (0,_index__WEBPACK_IMPORTED_MODULE_1__.renderTaskList)();
 }

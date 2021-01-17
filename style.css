@@ -13,6 +13,8 @@ h2 {
   font-size: 1em;
   font-weight: bold;
   padding: 1vw;
+  margin: 1vw;
+  border: solid 1px black;
 }
 
 h2:hover {
@@ -51,12 +53,16 @@ button:hover {
 form {
   display: none;
   padding: 1vw;
+  border: solid 1px black;
+  width: 80%;
 }
 
 input,
-label {
+label,
+select {
   display: block;
-  width: 150px;
+  width: 70%;
+  margin: auto;
 }
 
 span:hover {
@@ -64,13 +70,14 @@ span:hover {
 }
 
 table {
-  margin: 1vw;
+  margin: 1vw auto;
   width: 90%;
 }
 
 tr {
   line-height: 2em;
   cursor: pointer;
+  text-align: center;
 }
 
 tr:hover {
@@ -80,6 +87,7 @@ tr:hover {
 td {
   border: solid 1px #ddd;
   padding: 0.5em;
+  vertical-align: middle;
 }
 
 .striked {
@@ -90,4 +98,22 @@ footer {
   background-color: #321fad;
   color: white;
   text-align: center;
+}
+
+@media only screen and (min-width: 600px) {
+  form {
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  form {
+    width: 40%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  form {
+    width: 30%;
+  }
 }
