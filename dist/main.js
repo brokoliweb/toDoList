@@ -3668,9 +3668,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function listAllTasks() {
-  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "green";
-  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "black";
-  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "black";
+  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.background = "yellow";
+  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.background = `#fae03a`;
+  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.background = `#fae03a`;
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
   for (let i = 0; i < _index__WEBPACK_IMPORTED_MODULE_1__.taskArray.length; i++) {
     let tableRow = document.createElement("tr");
@@ -3709,9 +3709,9 @@ function listAllTasks() {
 
 function listTodayTasks() {
   
-  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "black";
-  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "green";
-  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "black";
+  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.background = `#fae03a`;
+  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.background = "yellow";
+  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.background = `#fae03a`;
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
   for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.todayTaskArray.length; i++) {
     let tableRow = document.createElement("tr");
@@ -3749,9 +3749,9 @@ function listTodayTasks() {
 }
 
 function listWeekTasks() {
-  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.color = "black";
-  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.color = "black";
-  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.color = "green";
+  _index__WEBPACK_IMPORTED_MODULE_1__.allTasks.style.background = `#fae03a`;
+  _index__WEBPACK_IMPORTED_MODULE_1__.today.style.background = `#fae03a`;
+  _index__WEBPACK_IMPORTED_MODULE_1__.week.style.background = "yellow";
   _addTasks__WEBPACK_IMPORTED_MODULE_0__.taskList.innerHTML = "";
   for (let i = 0; i < _addTasks__WEBPACK_IMPORTED_MODULE_0__.weekTaskArray.length; i++) {
     let tableRow = document.createElement("tr");
