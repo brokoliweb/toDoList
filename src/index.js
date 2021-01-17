@@ -1,4 +1,4 @@
-import { openProjectForm } from "./modules/addTasks";
+import { openProjectForm, createTodayTaskArray, createWeekTaskArray } from "./modules/addTasks";
 import { changeStatus } from "./modules/modifyTasks";
 import {
   listAllTasks,
@@ -29,6 +29,43 @@ function renderTaskList() {
   }
 }
 
+const clearButton = document.querySelector(".clear-tasks");
+
+clearButton.addEventListener("click", clearTasks);
+
+function clearTasks() {
+  let newArray = [];
+  for (let i = 0; i < taskArray.length; i++) {
+    if (taskArray[i].striked === false) {
+      newArray.push({
+        title: taskArray[i].title,
+        description: taskArray[i].description,
+        priority: taskArray[i].priority,
+        date: taskArray[i].date,
+        striked: taskArray[i].striked,
+      });
+    }
+  }
+  
+  taskArray = newArray;
+  
+  listAllTasks();
+  createTodayTaskArray();
+  createWeekTaskArray();
+
+  renderAfterClear();
+}
+
+function renderAfterClear() {
+  if (allTasks.style.color === "red") {
+    listAllTasks();
+  } else if (today.style.color === "red") {
+    listTodayTasks();
+  } else if (week.style.color === "red") {
+    listWeekTasks();
+  }
+}
+
 // store taskArray in local storage
 
 function storeLocal() {
@@ -48,6 +85,9 @@ function storeLocal() {
   } else {
     taskArray = item;
     listAllTasks();
+    createTodayTaskArray();
+    createWeekTaskArray();
+    
   }
 })();
 
